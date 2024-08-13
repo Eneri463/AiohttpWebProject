@@ -114,3 +114,35 @@ async def getCities(request):
     
     except:
         return web.Response(status=400, text="Something went wrong")
+
+
+
+ # запрос на поиск ближайших городов по координатам
+async def nearestCities(request):
+    
+    try:
+        
+        data = request.rel_url
+        
+        point = 'POINT(' + str(data.query['longitude']) + ' ' + str(data.query['latitude']) + ')'
+
+        async with request.app['db'].connect() as conn:
+            
+            res = await conn.execute(text("SELECT name, ST_Y(the_geom), ST_X(the_geom), ST_DistanceSphere(the_geom, \
+                                    ST_GeomFromText(:point, 4326)) AS distance \
+                                    FROM cities \
+                                    ORDER BY distance \
+                                    LIMIT 2;"),
+                                    {"point": point})
+            await conn.commit()
+            
+            payload = []
+            content = {}
+            for result in res:
+                content = {'name': result[0], 'latitude': result[1], 'longitude': result[2]}
+                payload.append(content)
+                content = {}
+                
+            return web.json_response(payload)
+    except:
+        return web.Response(status=400, text="Something went wrong")
