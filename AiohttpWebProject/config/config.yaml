@@ -1,0 +1,5 @@
+common:
+  port: 5005 
+postgres:
+  database_url: postgresql+asyncpg://postgres:root@localhost/userdb
+  require_ssl: false

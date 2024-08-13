@@ -1,4 +1,5 @@
-import asyncpgsa
+from sqlalchemy.ext.asyncio import create_async_engine
+import asyncpg
 
 
 def setup(application):
@@ -10,7 +11,7 @@ def setup(application):
 async def onStart(application):
     
     config = application["config"]["postgres"]
-    application['db'] = await asyncpgsa.create_pool(dsn=config["database_url"])
+    application['db'] = create_async_engine(config["database_url"])
 
 
 async def onShutdown(application):

@@ -1,5 +1,6 @@
 import asyncio
 from aiohttp import web
+import sqlalchemy.ext.asyncio
 
 
 from app.routes import routes
