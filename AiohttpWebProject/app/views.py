@@ -124,7 +124,7 @@ async def nearestCities(request):
         
         data = request.rel_url
         
-        point = 'POINT(' + str(data.query['longitude']) + ' ' + str(data.query['latitude']) + ')'
+        point = 'POINT(' + data.query['longitude'] + ' ' + data.query['latitude'] + ')'
 
         async with request.app['db'].connect() as conn:
             
