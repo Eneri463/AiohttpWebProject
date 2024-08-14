@@ -70,6 +70,20 @@ async def test_get_city_wrong(cli):
     assert resp.status == 400
 
 
+# DEL удаление информации о городе (корректный запрос)
+async def test_del_city(cli):
+    
+    resp = await cli.delete('/city?name=Омск')
+    assert resp.status == 200
+
+
+# DEL удаление информации о городе (некорректный запрос)
+async def test_del_city_wrong(cli):
+    
+    resp = await cli.delete('/city?view=Омск')
+    assert resp.status == 400
+
+
 # GET информация обо всех городах (корректный ввод)
 async def test_get_all_cities(cli):
     
