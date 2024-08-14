@@ -9,15 +9,12 @@ from geopy.adapters import AioHTTPAdapter
 # название городов ожидаются на русском языке
 async def getLocation(name):
     
-    async with Nominatim(user_agent="app",
-                        adapter_factory=AioHTTPAdapter,) as geolocator:
+        async with Nominatim(user_agent="app",
+                            adapter_factory=AioHTTPAdapter,) as geolocator:
         
-        location = await geolocator.geocode(name, language="ru")
-    
-        if location:
-            return location.latitude, location.longitude
-        else:
-            return False
+            location = await geolocator.geocode(name, language="ru")  
+        
+            return location
 
 
 # запрос на просмотр информации об одном городе
@@ -54,8 +51,8 @@ async def postCity(request):
         res = await getLocation(name)
             
         if res:
-            
-            point = 'POINT(' + str(res[1]) + ' ' + str(res[0]) + ')'
+
+            point = 'POINT(' + str(res.longitude) + ' ' + str(res.latitude) + ')'
 
             async with request.app['db'].connect() as conn:
             
@@ -65,9 +62,8 @@ async def postCity(request):
                 await conn.commit()
                 
                 return web.Response(status=201, text="Created")
-
         else:
-            web.Response(status=400, text="This city does not exist")
+            return web.Response(status=400, text="This a city does not exist")
     
     except:
         return web.Response(status=400, text="Something went wrong")

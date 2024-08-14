@@ -16,7 +16,8 @@
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
     <Name>AiohttpWebProject</Name>
     <RootNamespace>AiohttpWebProject</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|envAio</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|newAio</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +28,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|envAio" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|newAio" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\config.yaml" />
@@ -47,6 +48,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\views.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="conftest.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

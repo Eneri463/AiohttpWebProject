@@ -1,5 +1,7 @@
 common:
   port: 5005 
+  test_port: 6000
 postgres:
   database_url: postgresql+asyncpg://postgres:root@localhost/userdb
+  test_database_url: postgresql+asyncpg://postgres:root@localhost/testDB
   require_ssl: false
